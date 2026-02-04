@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miww Moonsea - Portfolio Pribadi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-dark: #0a0a0a;
+            --secondary-dark: #141414;
+            --accent-blue: #00b4d8;
+            --accent-purple: #6a11cb;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --card-bg: #1a1a1a;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--primary-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 15px 0;
+            transition: var(--transition);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-blue);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section with Profile */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-text .subtitle {
+            font-size: 1.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .hero-text p {
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+
+        .profile-image-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-image {
+            width: 350px;
+            height: 450px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple));
+        }
+
+        .profile-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 50%, var(--primary-dark) 100%);
+            z-index: 1;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: relative;
+            z-index: 0;
+        }
+
+        /* Section Styling */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        /* Education Section */
+        .education-item {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-blue);
+            transition: var(--transition);
+        }
+
+        .education-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .education-item h3 {
+            color: var(--accent-blue);
+            margin-bottom: 5px;
+        }
+
+        /* Skills Section */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-card {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-top: 3px solid var(--accent-purple);
+        }
+
+        .skill-card h3 {
+            color: var(--accent-purple);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .skill-card h3 i {
+            margin-right: 10px;
+        }
+
+        /* Experience & Others */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline-item {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-blue);
+            transition: var(--transition);
+        }
+
+        .timeline-item:hover {
+            transform: translateX(10px);
+        }
+
+        .timeline-item h3 {
+            color: var(--accent-blue);
+            margin-bottom: 5px;
+        }
+
+        .timeline-item .date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Contact Section */
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            background-color: var(--card-bg);
+            padding: 15px 25px;
+            border-radius: 10px;
+            width: 300px;
+            transition: var(--transition);
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-item i {
+            color: var(--accent-blue);
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-dark);
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 20px;
+        }
+
+        .social-links a {
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            color: var(--accent-blue);
+            transform: translateY(-5px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text h1 {
+                font-size: 2.8rem;
+            }
+
+            .profile-image {
+                width: 300px;
+                height: 400px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background-color: var(--primary-dark);
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 50px;
+                transition: var(--transition);
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li {
+                margin: 15px 0;
+            }
+
+            .hero-text h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-text .subtitle {
+                font-size: 1.4rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .profile-image {
+                width: 250px;
+                height: 350px;
+            }
+
+            .hero-text h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">Miww Moonsea</div>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="#home">Beranda</a></li>
+                    <li><a href="#about">Tentang</a></li>
+                    <li><a href="#education">Pendidikan</a></li>
+                    <li><a href="#skills">Kemampuan</a></li>
+                    <li><a href="#experience">Pengalaman</a></li>
+                    <li><a href="#contact">Kontak</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text animate-on-scroll">
+                    <h1>Miww Moonsea</h1>
+                    <div class="subtitle">Developer & Digital Entrepreneur</div>
+                    <p>Seorang profesional di bidang teknologi dengan keahlian dalam pemrograman, jaringan, keamanan cyber, manajemen, dan analisis keuangan digital. Berpengalaman dalam berbagai bidang dan aktif dalam organisasi.</p>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-birthday-cake"></i>
+                            <span>Tahun Lahir: 2006</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-image-container animate-on-scroll">
+                    <div class="profile-image">
+                        <!-- Placeholder untuk foto profil -->
+                         <img src="miwwmoonsea.png" alt="Miww Moonsea">
+                        <div style="width: 100%; height: 100%; background: linear-gradient(45deg, #1a1a2e, #16213e); display: flex; justify-content: center; align-items: center;">
+                            <div style="text-align: center; color: white; padding: 20px;">
+                                <i class="fas fa-user" style="font-size: 5rem; margin-bottom: 20px;"></i>
+                                <p style="font-size: 1.2rem;">Foto Profil Miww Moonsea</p>
+                                <p style="font-size: 0.9rem; margin-top: 10px;">(Efek fade ke bawah diterapkan)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Tentang Saya</h2>
+            <div class="education-item animate-on-scroll">
+                <p>Saya adalah seorang profesional muda dengan minat yang luas di bidang teknologi, bisnis digital, dan keuangan. Dengan latar belakang pendidikan di bidang Rekayasa Perangkat Lunak, Computer Science, dan Perbankan Syariah, saya memiliki perspektif yang unik dalam menyelesaikan masalah dan mengembangkan solusi inovatif.</p>
+                <p style="margin-top: 15px;">Saya aktif dalam berbagai organisasi dan memiliki pengalaman bekerja di berbagai bidang, mulai dari IT Support hingga Associate Cloud Engineer di Google. Saat ini saya fokus pada pengembangan usaha di bidang investasi, bisnis digital, dan komunitas cyber.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Pendidikan</h2>
+            <div class="education-item animate-on-scroll">
+                <h3>SMKN 2 Bekasi</h3>
+                <p>Jurusan: Rekayasa Perangkat Lunak</p>
+            </div>
+            <div class="education-item animate-on-scroll">
+                <h3>Binus University</h3>
+                <p>Program: S1 Computer Science - Software Engineering</p>
+            </div>
+            <div class="education-item animate-on-scroll">
+                <h3>STAI Al-Marhalah Al-'Ulya</h3>
+                <p>Program: S1 Perbankan Syariah</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Kemampuan</h2>
+            <div class="skills-container">
+                <div class="skill-card animate-on-scroll">
+                    <h3><i class="fas fa-laptop-code"></i> Komputerisasi</h3>
+                    <p>Mahir dalam pemrograman, jaringan, keamanan cyber, dan bidang komputerisasi lainnya.</p>
+                </div>
+                <div class="skill-card animate-on-scroll">
+                    <h3><i class="fas fa-tasks"></i> Manajemen</h3>
+                    <p>Kemampuan manajemen proyek dan tim yang terbukti efektif dalam berbagai situasi.</p>
+                </div>
+                <div class="skill-card animate-on-scroll">
+                    <h3><i class="fas fa-file-excel"></i> Administrasi</h3>
+                    <p>Mahir menggunakan Microsoft Office (Excel, Word, PowerPoint) untuk kebutuhan administratif.</p>
+                </div>
+                <div class="skill-card animate-on-scroll">
+                    <h3><i class="fas fa-paint-brush"></i> Desain & Editing</h3>
+                    <p>Keahlian dalam desain grafis dan video editing untuk konten digital.</p>
+                </div>
+                <div class="skill-card animate-on-scroll">
+                    <h3><i class="fas fa-chart-line"></i> Analisis Keuangan</h3>
+                    <p>Mahir menganalisis keuangan digital termasuk Crypto dan saham digital.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Pengalaman & Magang</h2>
+            <div class="timeline">
+                <div class="timeline-item animate-on-scroll">
+                    <h3>UPTD Puskesmas Bekasi</h3>
+                    <p class="date">PKL (Praktik Kerja Lapangan)</p>
+                    <p>Pengalaman kerja lapangan di bidang kesehatan masyarakat.</p>
+                </div>
+                <div class="timeline-item animate-on-scroll">
+                    <h3>Restaurant Koko Will Kuliner</h3>
+                    <p class="date">Rolling Staf</p>
+                    <p>Pengalaman di industri kuliner dan manajemen restoran.</p>
+                </div>
+                <div class="timeline-item animate-on-scroll">
+                    <h3>I Care Health Clinic</h3>
+                    <p class="date">IT Support</p>
+                    <p>Memberikan dukungan teknologi informasi di klinik kesehatan.</p>
+                </div>
+                <div class="timeline-item animate-on-scroll">
+                    <h3>Google</h3>
+                    <p class="date">Associate Cloud Engineer</p>
+                    <p>Bekerja sebagai Associate Cloud Engineer di perusahaan teknologi terkemuka.</p>
+                </div>
+            </div>
+
+            <h2 class="section-title animate-on-scroll" style="margin-top: 80px;">Usaha</h2>
+            <div class="skills-container">
+                <div class="skill-card animate-on-scroll">
+                    <h3><i class="fas fa-chart-line"></i> Investment</h3>
+                    <p>Mengelola portofolio investasi di berbagai instrumen keuangan.</p>
+                </div>
+                <div class="skill-card animate-on-scroll">
+                    <h3><i class="fas fa-store"></i> Business Digital</h3>
+                    <p>Membangun dan mengembangkan bisnis di era digital.</p>
+                </div>
+                <div class="skill-card animate-on-scroll">
+                    <h3><i class="fas fa-users"></i> CyberCommunity</h3>
+                    <p>Memimpin komunitas cyber yang fokus pada teknologi dan keamanan digital.</p>
+                </div>
+            </div>
+
+            <h2 class="section-title animate-on-scroll" style="margin-top: 80px;">Organisasi</h2>
+            <div class="skills-container">
+                <div class="skill-card animate-on-scroll">
+                    <h3><i class="fas fa-dumbbell"></i> Small Group Fitness</h3>
+                    <p>Aktif dalam komunitas kebugaran kelompok kecil.</p>
+                </div>
+                <div class="skill-card animate-on-scroll">
+                    <h3><i class="fas fa-user-graduate"></i> Himpunan Mahasiswa Islam (HMI)</h3>
+                    <p>Anggota organisasi kemahasiswaan Islam.</p>
+                </div>
+                <div class="skill-card animate-on-scroll">
+                    <h3><i class="fas fa-briefcase"></i> HIPMI Kota Bekasi</h3>
+                    <p>Anggota Himpunan Pengusaha Muda Indonesia cabang Kota Bekasi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Kontak</h2>
+            <div class="contact-info">
+                <div class="contact-item animate-on-scroll">
+                    <i class="fas fa-envelope"></i>
+                    <span>cyberrcommunity@gmail.com</span>
+                </div>
+                <div class="contact-item animate-on-scroll">
+                    <i class="fas fa-phone"></i>
+                    <span>+62 859-5449-8360</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Miww Moonsea. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+
+        // Scroll animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with animate-on-scroll class
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.padding = '10px 0';
+                header.style.backgroundColor = 'rgba(10, 10, 10, 0.98)';
+            } else {
+                header.style.padding = '15px 0';
+                header.style.backgroundColor = 'rgba(10, 10, 10, 0.95)';
+            }
+        });
+    </script>
+</body>
+</html>
