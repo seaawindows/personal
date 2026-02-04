@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sea Trader Academy</title>
+    <style>
+        :root { --bg-dark: #050714; --primary-blue: #090979; --accent-purple: #6a0dad; --dim-cyan: #00d4ff; --text-white: #ffffff; --glass: rgba(255, 255, 255, 0.05); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; scroll-behavior: smooth; }
+        body { background-color: var(--bg-dark); color: var(--text-white); overflow-x: hidden; }
+        .background-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at 10% 20%, var(--primary-blue) 0%, transparent 40%), radial-gradient(circle at 90% 80%, var(--accent-purple) 0%, transparent 40%), linear-gradient(180deg, var(--bg-dark) 0%, #000000 100%); opacity: 0.9; }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; backdrop-filter: blur(10px); background: rgba(0,0,0,0.3); position: fixed; width: 100%; z-index: 100; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--dim-cyan); letter-spacing: 2px; text-transform: uppercase; }
+        .nav-links a { color: var(--text-white); text-decoration: none; margin-left: 30px; font-size: 0.9rem; transition: color 0.3s; }
+        .hero { height: 100vh; display: flex; align-items: center; justify-content: center; padding: 0 50px; position: relative; }
+        .hero-content { flex: 1; z-index: 2; }
+        .hero h1 { font-size: 4rem; line-height: 1.1; margin-bottom: 20px; background: linear-gradient(90deg, #fff, var(--dim-cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-image { flex: 1; display: flex; justify-content: center; align-items: flex-end; height: 100%; position: relative; }
+        .hero-image img { max-height: 80vh; width: auto; object-fit: contain; z-index: 5; position: relative; display: block; }
+        .hero-image::after { content: ''; position: absolute; width: 300px; height: 300px; background: var(--dim-cyan); filter: blur(120px); opacity: 0.3; bottom: 20%; }
+        .btn-main { padding: 12px 30px; background: linear-gradient(45deg, var(--primary-blue), var(--accent-purple)); color: white; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; font-weight: bold; }
+        .education { padding: 80px 50px; }
+        .alphabet-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 40px; }
+        .alpha-btn { background: transparent; border: 1px solid var(--dim-cyan); color: var(--dim-cyan); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-weight: bold; }
+        .alpha-btn.active { background: var(--dim-cyan); color: var(--bg-dark); }
+        .term-group { display: none; }
+        .term-group.active { display: block; }
+        .term-item { background: var(--glass); padding: 20px; margin-bottom: 10px; border-left: 4px solid var(--accent-purple); border-radius: 5px; }
+        .term-title { color: var(--dim-cyan); font-weight: bold; font-size: 1.2rem; }
+    </style>
+</head>
+<body>
+    <div class="background-overlay"></div>
+    <nav>
+        <div class="logo">Sea Trader</div>
+        <div class="nav-links"><a href="#home">Home</a><a href="#dictionary">Kamus Trader</a></div>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Navigasi Lautan<br>Aset Digital</h1>
+            <p>Jelajahi dunia trading dengan panduan yang tepat.</p><br>
+            <a href="#dictionary" class="btn-main">Mulai Belajar</a>
+        </div>
+        <div class="hero-image">
+            <img src="miwwmoonsea.png" alt="html">
+        </div>
+    </section>
+
+    <section class="education" id="dictionary">
+        <h2 style="text-align: center; margin-bottom: 30px;">Kamus Trader A-Z</h2>
+        <div class="alphabet-nav" id="alphaNav"></div>
+        <div id="glossaryContent"></div>
+    </section>
+    </section>
+
+    <section class="education" id="dictionary">
+        <h2 class="section-title">Kamus Trader (A-Z)</h2>
+        
+        <div class="alphabet-nav" id="alphaNav">
+            </div>
+
+        <div class="glossary-container" id="glossaryContent">
+            </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Sea Trader Academy. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // DATA GLOSSARY LENGKAP (A-G dan I-Z)
+        const dictionaryData = {
+            "A": [
+                {t: "Abenomics", d: "Kebijakan ekonomi Jepang untuk mendorong pertumbuhan melalui pelonggaran moneter dan stimulus fiskal."},
+                {t: "Abnormal Return", d: "Keuntungan atau kerugian investasi yang melebihi ekspektasi berdasarkan kinerja pasar."},
+                {t: "Absolute Advantage", d: "Kemampuan suatu pihak untuk memproduksi barang atau jasa lebih efisien dibandingkan pihak lain."},
+                {t: "Accumulation Phase", d: "Tahapan investasi saat seseorang mulai menabung dan mengalokasikan aset secara konsisten."},
+                {t: "All Time High (ATH)", d: "Harga tertinggi yang pernah dicapai oleh suatu aset sepanjang sejarah perdagangannya."},
+                {t: "Algo-Trading", d: "Metode perdagangan menggunakan algoritma komputer untuk mengeksekusi transaksi otomatis."}
+            ],
+            "B": [
+                {t: "Bagholder", d: "Investor yang tetap memegang aset dalam jumlah besar meskipun nilainya terus merosot tajam."},
+                {t: "Bear Market", d: "Kondisi pasar di mana harga aset secara keseluruhan sedang mengalami tren penurunan."},
+                {t: "Bitcoin (BTC)", d: "Aset kripto pertama dan terbesar di dunia yang diperkenalkan pada tahun 2009 oleh Satoshi Nakamoto."},
+                {t: "Blockchain", d: "Teknologi buku besar digital yang terdesentralisasi dan mencatat semua transaksi."},
+                {t: "Bull Market", d: "Kondisi pasar di mana harga aset sedang mengalami tren kenaikan yang kuat."},
+                {t: "Buy the Dip (BTD)", d: "Strategi membeli aset saat harganya sedang mengalami penurunan sementara."}
+            ],
+            "C": [
+                {t: "Candlestick", d: "Grafik harga yang menampilkan harga pembukaan, penutupan, tertinggi, dan terendah."},
+                {t: "Capital Gains", d: "Keuntungan dari selisih harga jual aset kripto yang lebih tinggi dibandingkan harga belinya."},
+                {t: "Cold Wallet", d: "Dompet kripto offline untuk menyimpan aset dengan keamanan maksimal."},
+                {t: "Consensus", d: "Proses di mana semua peserta dalam jaringan blockchain setuju tentang status buku besar."},
+                {t: "Cryptocurrency", d: "Mata uang digital yang menggunakan kriptografi untuk keamanan dan desentralisasi."}
+            ],
+            "D": [
+                {t: "Dark Web", d: "Bagian internet yang tidak terindeks, sering dikaitkan dengan aktivitas anonim."},
+                {t: "Day Trading", d: "Strategi perdagangan aset dalam rentang waktu sangat singkat (satu hari)."},
+                {t: "Dead Cat Bounce", d: "Kenaikan harga sementara dalam tren menurun yang mengecoh investor."},
+                {t: "Decentralized Finance (DeFi)", d: "Ekosistem layanan keuangan terbuka di atas blockchain tanpa perantara bank."},
+                {t: "DEX (Decentralized Exchange)", d: "Platform perdagangan aset digital tanpa entitas pusat."}
+            ],
+            "E": [
+                {t: "Eclipse Attack", d: "Serangan jaringan di mana node korban dikurung dalam koneksi palsu."},
+                {t: "Ethereum", d: "Platform blockchain yang memungkinkan smart contract dan dApps."},
+                {t: "Escrow", d: "Mekanisme penyimpanan dana oleh pihak ketiga hingga syarat terpenuhi."},
+                {t: "ERC-20", d: "Standar token Ethereum yang paling umum digunakan."},
+                {t: "Encryption", d: "Proses mengamankan data dengan mengubahnya menjadi format tidak terbaca."}
+            ],
+            "F": [
+                {t: "Falling Wedge", d: "Pola grafik harga menyempit menurun, sering dianggap sinyal bullish."},
+                {t: "FOMO (Fear Of Missing Out)", d: "Rasa takut ketinggalan peluang yang membuat investor membeli secara emosional."},
+                {t: "FUD", d: "Fear, Uncertainty, and Doubt. Strategi menyebar info negatif untuk menjatuhkan harga."},
+                {t: "Floor Price", d: "Harga terendah di mana sebuah item dalam koleksi NFT dapat dibeli."},
+                {t: "Fiat", d: "Mata uang resmi pemerintah seperti Rupiah atau Dollar."}
+            ],
+            "G": [
+                {t: "Gas Fee", d: "Biaya yang dibayarkan untuk memproses transaksi di jaringan blockchain."},
+                {t: "GameFi", d: "Gabungan game dan keuangan (DeFi), memungkinkan play-to-earn."},
+                {t: "Gains", d: "Keuntungan finansial dari selisih harga beli dan jual."},
+                {t: "Gas Limit", d: "Jumlah maksimum gas yang bersedia dibayar pengguna untuk transaksi."}
+            ],
+            "I": [
+                {t: "ICO (Initial Coin Offering)", d: "Metode penggalangan dana di mana proyek kripto baru menjual token pertama mereka kepada investor."},
+                {t: "IDO (Initial DEX Offering)", d: "Peluncuran token baru yang dilakukan melalui platform pertukaran terdesentralisasi (DEX)."},
+                {t: "IEO (Initial Exchange Offering)", d: "Peluncuran token yang dikelola oleh bursa kripto terpusat (CEX)."},
+                {t: "Immutability", d: "Karakteristik blockchain di mana data yang sudah dicatat tidak dapat diubah atau dimanipulasi."},
+                {t: "Impermanent Loss", d: "Risiko kerugian sementara penyedia likuiditas akibat perubahan harga aset di liquidity pool."},
+                {t: "Index", d: "Instrumen yang melacak kinerja sekelompok aset kripto untuk memberikan gambaran tren pasar."},
+                {t: "Inflationary", d: "Karakteristik aset kripto yang suplainya terus bertambah, dapat menurunkan daya beli jika permintaan stagnan."},
+                {t: "Initial Supply", d: "Jumlah total token yang tersedia atau beredar pada saat peluncuran awal proyek."},
+                {t: "Injective", d: "Protokol blockchain layer-1 untuk membangun aplikasi keuangan terdesentralisasi (DeFi)."},
+                {t: "Input", d: "Bagian transaksi yang menunjukkan asal dana yang akan dikirim."},
+                {t: "Institutional Investor", d: "Organisasi besar (bank, dana pensiun) yang menginvestasikan modal besar ke aset kripto."},
+                {t: "Interoperability", d: "Kemampuan berbagai jaringan blockchain berbeda untuk berkomunikasi dan berbagi data."},
+                {t: "Intrinsic Value", d: "Nilai mendasar aset berdasarkan kegunaan dan teknologi, terlepas dari harga pasar."},
+                {t: "Inverse Perpetual", d: "Kontrak berjangka yang menggunakan aset kripto itu sendiri sebagai jaminan."},
+                {t: "IPFS", d: "Protokol penyimpanan file terdesentralisasi, sering digunakan untuk menyimpan data NFT."}
+            ],
+            "J": [
+                {t: "Jager", d: "Unit terkecil dari token Binance Coin (BNB), setara dengan 0.00000001 BNB."},
+                {t: "JavaScript", d: "Bahasa pemrograman umum untuk membangun antarmuka aplikasi terdesentralisasi (dApps)."},
+                {t: "JavaScript Token", d: "Token digital dalam lingkungan aplikasi JavaScript, biasanya untuk pengujian."},
+                {t: "JOMO (Joy Of Missing Out)", d: "Perasaan tenang karena sengaja tidak ikut tren investasi berisiko tinggi."}
+            ],
+            "K": [
+                {t: "Key Pair", d: "Pasangan kunci kriptografi (public & private key) untuk akses dan transaksi."},
+                {t: "Keylogger", d: "Perangkat lunak berbahaya yang merekam ketukan keyboard untuk mencuri password/key."},
+                {t: "Klinger Oscillator", d: "Indikator teknikal membandingkan volume dan harga untuk identifikasi tren."},
+                {t: "KYC (Know Your Customer)", d: "Proses verifikasi identitas wajib di bursa untuk mencegah pencucian uang."}
+            ],
+            "L": [
+                {t: "Large Cap", d: "Aset kripto dengan kapitalisasi pasar besar, cenderung stabil dan likuid."},
+                {t: "Laser Eyes", d: "Simbol dukungan kuat terhadap Bitcoin di media sosial, berharap harga naik tinggi."},
+                {t: "Latency", d: "Waktu tunda data berpindah dalam jaringan. Semakin rendah, semakin cepat."},
+                {t: "Law of Accelerating Returns", d: "Prinsip kemajuan teknologi eksponensial, menjelaskan adopsi cepat blockchain."},
+                {t: "Layer-0", d: "Infrastruktur dasar yang memungkinkan beberapa blockchain (Layer-1) berinteraksi."},
+                {t: "Layer-1", d: "Blockchain utama yang memproses transaksi di jaringannya sendiri (cth: Bitcoin, Ethereum)."},
+                {t: "Layer-2", d: "Protokol di atas Layer-1 untuk meningkatkan skalabilitas dan kecepatan (cth: Arbitrum)."},
+                {t: "Ledger", d: "Buku besar digital yang mencatat semua riwayat transaksi secara kronologis."},
+                {t: "Leverage", d: "Penggunaan dana pinjaman untuk meningkatkan potensi keuntungan (dan risiko)."},
+                {t: "Lido", d: "Protokol liquid staking yang memberikan token pengganti (stETH) saat aset di-stake."},
+                {t: "Light Node", d: "Node yang hanya mengunduh sebagian data blockchain untuk verifikasi cepat."},
+                {t: "Liquidity", d: "Kemudahan aset dikonversi jadi tunai tanpa mengubah harga signifikan."},
+                {t: "Liquidity Pool", d: "Kumpulan dana dalam smart contract DEX untuk memfasilitasi perdagangan."},
+                {t: "Long Position", d: "Strategi membeli aset dengan harapan harga akan naik di masa depan."}
+            ],
+            "M": [
+                {t: "Mainnet", d: "Jaringan blockchain utama yang berfungsi penuh dengan nilai ekonomi nyata."},
+                {t: "Margin Trading", d: "Perdagangan menggunakan dana pinjaman untuk membeli lebih banyak aset."},
+                {t: "Market Cap", d: "Nilai total koin beredar (Harga x Jumlah Koin)."},
+                {t: "Mascara Attack", d: "Serangan siber meniru tampilan dompet digital untuk mencuri akses."},
+                {t: "Masternode", d: "Node khusus dengan fungsi lebih luas seperti tata kelola jaringan."},
+                {t: "Max Supply", d: "Jumlah maksimum koin yang akan pernah ada dalam protokol tertentu."},
+                {t: "MEV", d: "Keuntungan maksimal validator dari menyusun urutan transaksi dalam blok."},
+                {t: "Mempool", d: "Area tunggu sementara transaksi sebelum masuk ke dalam blok."},
+                {t: "MetaMask", d: "Dompet aset kripto populer berbasis browser/mobile untuk jaringan Ethereum."},
+                {t: "Metaverse", d: "Ruang virtual kolektif (VR/AR) dengan ekonomi digital berbasis kripto."},
+                {t: "Microtransaction", d: "Transaksi keuangan jumlah sangat kecil, efisien via blockchain/L2."},
+                {t: "Mid Cap", d: "Aset kripto kapitalisasi menengah, antara stabil dan volatil."},
+                {t: "Miner", d: "Pihak yang memproses transaksi dan mengamankan jaringan (PoW)."},
+                {t: "Mining", d: "Proses validasi transaksi dan penciptaan blok baru berhadiah koin."},
+                {t: "Mining Pool", d: "Kelompok penambang yang menggabungkan kekuatan komputasi."},
+                {t: "Moon / Mooning", d: "Istilah saat harga aset melonjak naik sangat cepat dan tinggi."},
+                {t: "Multisig", d: "Dompet yang butuh lebih dari satu kunci untuk menyetujui transaksi."}
+            ],
+            "N": [
+                {t: "Nakamoto Coefficient", d: "Metrik desentralisasi; jumlah entitas minimum untuk mengkompromikan jaringan."},
+                {t: "Negative Volume Index", d: "Indikator teknikal melacak volume rendah untuk identifikasi smart money."},
+                {t: "Network", d: "Kumpulan node terhubung membentuk sistem blockchain."},
+                {t: "Network Effects", d: "Nilai jaringan meningkat seiring bertambahnya pengguna."},
+                {t: "Network Fee", d: "Biaya kirim transaksi sebagai insentif validator/miner."},
+                {t: "Network Latency", d: "Waktu tunda antar node, krusial untuk kecepatan konfirmasi."},
+                {t: "NEVM", d: "Mesin virtual Syscoin, gabungan keamanan Bitcoin dan smart contract Ethereum."},
+                {t: "Newb", d: "Istilah untuk pemula di dunia kripto."},
+                {t: "NFT", d: "Token unik mewakili kepemilikan aset digital/fisik yang tidak bisa dipertukarkan 1:1."},
+                {t: "Node", d: "Perangkat terhubung ke blockchain yang menyimpan data dan menjalankan protokol."},
+                {t: "Nonce", d: "Angka acak sekali pakai dalam mining untuk menemukan hash valid."}
+            ],
+            "O": [
+                {t: "Off-Chain", d: "Aktivitas di luar blockchain utama untuk kecepatan dan biaya rendah."},
+                {t: "Off-Chain Governance", d: "Pengambilan keputusan di luar blockchain (forum, komunitas)."},
+                {t: "Off-Chain Transaction", d: "Transaksi di luar jaringan utama, diselesaikan internal sebelum dicatat."},
+                {t: "Off-Ledger Currency", d: "Mata uang di luar sistem ledger blockchain (fiat/aset eksternal)."},
+                {t: "OCC", d: "Lembaga AS pengawas bank nasional dan regulasi aset digital perbankan."},
+                {t: "Offline Storage", d: "Penyimpanan aset terputus dari internet (cold storage) demi keamanan."},
+                {t: "Offshore Account", d: "Rekening luar negeri, di kripto merujuk pada yurisdiksi regulasi longgar."},
+                {t: "Omnichain", d: "Teknologi agar aplikasi berfungsi mulus di berbagai blockchain berbeda."},
+                {t: "On-Chain", d: "Aktivitas yang dicatat resmi dan permanen di dalam jaringan blockchain."},
+                {t: "On-Chain Governance", d: "Pemungutan suara langsung di blockchain oleh pemegang token."},
+                {t: "On-Ledger Currency", d: "Mata uang digital yang dikelola langsung pada ledger blockchain tersebut."},
+                {t: "OCO (One Cancels Other)", d: "Order di mana jika satu terpenuhi, yang lain otomatis batal."},
+                {t: "Open Source", d: "Software yang kode sumbernya bebas dilihat dan dimodifikasi publik."},
+                {t: "Oracle", d: "Layanan penyedia data dunia nyata (harga/cuaca) ke smart contract."},
+                {t: "Order Book", d: "Daftar pesanan beli/jual yang disusun berdasarkan harga di bursa."},
+                {t: "OTC (Over-the-Counter)", d: "Perdagangan langsung antar pihak di luar bursa publik (volume besar)."}
+            ],
+            "P": [
+                {t: "P2P (Peer-to-Peer)", d: "Transaksi langsung dua pihak tanpa perantara bank/bursa."},
+                {t: "Paper Wallet", d: "Cold storage berupa kunci publik/privat yang dicetak di kertas."},
+                {t: "Passive Income", d: "Pendapatan dari aset kripto tanpa trading aktif (staking, lending)."},
+                {t: "Peer-to-Peer Lending", d: "Meminjamkan aset kripto langsung ke peminjam untuk bunga."},
+                {t: "Pegged Asset", d: "Aset digital yang nilainya dipatok pada aset lain (fiat/emas)."},
+                {t: "Permissionless", d: "Siapa saja boleh bergabung dan bertransaksi tanpa izin otoritas."},
+                {t: "Phishing", d: "Penipuan mencuri data sensitif dengan menyamar jadi entitas tepercaya."},
+                {t: "Play-to-Earn (P2E)", d: "Model game di mana pemain dapat aset bernilai nyata dari bermain."},
+                {t: "Portfolio", d: "Kumpulan aset kripto yang dimiliki investor."},
+                {t: "Pre-mining", d: "Pengembang mencetak koin sebelum peluncuran publik (untuk tim/dana)."},
+                {t: "Price Impact", d: "Perubahan harga akibat transaksi besar di pasar likuiditas rendah."},
+                {t: "Private Key", d: "Kunci rahasia pengendali dana penuh. Jangan berikan ke siapa pun."},
+                {t: "Proof of Stake (PoS)", d: "Validasi blok berdasarkan jumlah koin yang dipertaruhkan (stake)."},
+                {t: "Proof of Work (PoW)", d: "Validasi blok dengan memecahkan teka-teki matematika (mining)."},
+                {t: "Public Key", d: "Alamat untuk menerima dana, mirip nomor rekening."},
+                {t: "Pump and Dump", d: "Manipulasi menaikkan harga drastis lalu dijual massal hingga anjlok."}
+            ],
+            "Q": [
+                {t: "Quantitative Analysis", d: "Evaluasi aset pakai matematika/statistik data historis."},
+                {t: "Quantitative Easing (QE)", d: "Bank sentral cetak uang; pemicu inflasi yang mendorong harga kripto."},
+                {t: "Quantum Computing", d: "Teknologi komputer super kuat, potensi ancaman enkripsi blockchain saat ini."},
+                {t: "Quantum Resistance", d: "Kemampuan blockchain tahan dari serangan komputer kuantum."},
+                {t: "Quasar", d: "Protokol manajemen aset atau fitur optimasi yield (Cosmos/Injective)."},
+                {t: "Quorum", d: "Jumlah minimum suara/validator agar keputusan/blok dianggap sah."}
+            ],
+            "R": [
+                {t: "RFID", d: "Identifikasi otomatis gelombang radio, integrasi logistik blockchain."},
+                {t: "Rage Quit", d: "Keluar mendadak dari DAO/proyek karena tidak puas, sambil tarik dana."},
+                {t: "Random Standards", d: "Protokol eksperimental tanpa konsensus luas."},
+                {t: "Rank", d: "Peringkat aset berdasarkan kapitalisasi pasar atau volume."},
+                {t: "Ransomware", d: "Malware pengunci data minta tebusan kripto."},
+                {t: "Rare Sats", d: "Satuan terkecil Bitcoin (Satoshi) bernilai koleksi tinggi (Ordinals)."},
+                {t: "RWA (Real World Assets)", d: "Tokenisasi aset fisik (properti/emas) ke blockchain."},
+                {t: "Rebalancing", d: "Menyesuaikan porsi aset portofolio agar sesuai profil risiko."},
+                {t: "Rebase", d: "Penyesuaian otomatis suplai token untuk jaga stabilitas harga."},
+                {t: "Recovery Seed", d: "Kumpulan kata acak kunci utama pemulihan dompet."},
+                {t: "RSI", d: "Indikator teknikal ukur jenuh beli (overbought) atau jual (oversold)."},
+                {t: "Resistance", d: "Level harga di mana tekanan jual kuat, harga sulit naik lagi."},
+                {t: "ROI", d: "Persentase keuntungan/kerugian investasi dibanding modal awal."},
+                {t: "Rug Pull", d: "Penipuan pengembang bawa lari dana investor tiba-tiba."}
+            ],
+            "S": [
+                {t: "Satoshi (Sat)", d: "Unit terkecil Bitcoin. 1 BTC = 100 juta Satoshi."},
+                {t: "Satoshi Nakamoto", d: "Nama samaran pencipta Bitcoin."},
+                {t: "Scalability", d: "Kemampuan jaringan menangani banyak transaksi dengan cepat & murah."},
+                {t: "Scam", d: "Proyek penipuan."},
+                {t: "Second Layer (L2)", d: "Solusi di atas blockchain utama untuk kecepatan (cth: Lightning)."},
+                {t: "Seed Phrase", d: "Kunci pemulihan dompet (12-24 kata). Sangat rahasia."},
+                {t: "Security Token", d: "Token mewakili aset investasi (saham/properti), tunduk regulasi."},
+                {t: "Self-Custody", d: "Menyimpan aset sendiri tanpa pihak ketiga (bursa/bank)."},
+                {t: "Sell-Off", d: "Penjualan massal investor menyebabkan harga anjlok."},
+                {t: "Sentiment", d: "Perasaan kolektif pasar (optimis/pesimis) terhadap aset."},
+                {t: "Sharding", d: "Membagi database blockchain jadi bagian kecil (shards) agar cepat."},
+                {t: "Shitcoin", d: "Aset kripto tanpa nilai guna, teknologi buruk, atau masa depan tidak jelas."},
+                {t: "Sidechain", d: "Blockchain terpisah berjalan sejajar dengan rantai utama."},
+                {t: "Slippage", d: "Selisih harga harapan vs eksekusi, sering terjadi saat volatilitas tinggi."},
+                {t: "Smart Contract", d: "Kode program berjalan otomatis di blockchain saat syarat terpenuhi."},
+                {t: "Stablecoin", d: "Kripto bernilai stabil dipatok aset lain (USD/Emas)."},
+                {t: "Staking", d: "Mengunci aset di jaringan PoS untuk keamanan & imbalan."},
+                {t: "Support", d: "Level harga di mana tekanan beli kuat, harga sulit turun lagi."}
+            ],
+            "T": [
+                {t: "Taker", d: "Pengguna yang mengambil harga tersedia di order book (instan)."},
+                {t: "Take-Profit (TP)", d: "Order jual otomatis saat harga capai target untung."},
+                {t: "Tangible Asset", d: "Aset fisik nyata (emas/properti) yang di-tokenisasi."},
+                {t: "Technical Analysis", d: "Evaluasi aset berdasarkan data harga/volume masa lalu."},
+                {t: "Terahash", d: "Satuan kekuatan komputasi mining (1 triliun hash/detik)."},
+                {t: "Testnet", d: "Jaringan uji coba tanpa nilai uang nyata."},
+                {t: "Tether (USDT)", d: "Stablecoin populer dipatok 1:1 dengan USD."},
+                {t: "Ticker", d: "Kode unik aset di bursa (BTC, ETH, SOL)."},
+                {t: "Token", d: "Aset digital di atas blockchain pihak lain (cth: ERC-20 di Ethereum)."},
+                {t: "Tokenomics", d: "Model ekonomi token (suplai, distribusi, kegunaan)."},
+                {t: "Total Supply", d: "Total token ada saat ini (beredar + dikunci), minus burned."},
+                {t: "TVL (Total Value Locked)", d: "Total aset dikunci di protokol DeFi, indikator kepercayaan."},
+                {t: "Transaction Fee", d: "Biaya proses transaksi (gas fee)."},
+                {t: "Trustless", d: "Sistem aman tanpa perlu saling percaya antar pengguna/pihak ketiga."},
+                {t: "2FA", d: "Keamanan ganda untuk akses akun."}
+            ],
+            "U": [
+                {t: "Unbanked", d: "Orang tanpa akses bank. Blockchain jadi solusi inklusi keuangan."},
+                {t: "Uncle Block", d: "Blok valid tapi kalah cepat masuk rantai utama (di Ethereum lama)."},
+                {t: "Unconfirmed Transaction", d: "Transaksi terkirim tapi belum masuk blok (pending)."},
+                {t: "UNI Token", d: "Token governance Uniswap, beri hak suara masa depan protokol."},
+                {t: "Uniswap", d: "DEX terbesar dengan mekanisme AMM."},
+                {t: "Unit of Account", d: "Fungsi uang sebagai standar pengukur nilai."},
+                {t: "US House Committee", d: "Komite DPR AS pengawas keuangan & regulasi kripto."},
+                {t: "UBI", d: "Konsep pendapatan dasar rutin via blockchain."},
+                {t: "Unpermissioned Ledger", d: "Buku besar publik bisa diakses siapa saja (Bitcoin)."},
+                {t: "Unrealized P&L", d: "Untung/rugi 'kertas' karena aset belum dijual."},
+                {t: "UTXO", d: "Model transaksi Bitcoin, sisa dana jadi input transaksi berikutnya."},
+                {t: "Utility Token", d: "Token akses produk/layanan, bukan investasi saham."}
+            ],
+            "V": [
+                {t: "Validator", d: "Node verifikator transaksi & pembuat blok (PoS)."},
+                {t: "Vanity Address", d: "Alamat dompet custom (cth: ada nama sendiri) untuk estetika."},
+                {t: "Venture Capital", d: "Investor modal besar untuk startup kripto tahap awal."},
+                {t: "Verification Code", d: "Kode OTP untuk keamanan login."},
+                {t: "Vesting", d: "Penguncian token tim/investor, rilis bertahap cegah jual massal."},
+                {t: "Virgin Bitcoin", d: "Bitcoin baru ditambang, belum pernah dipakai transaksi (bersih)."},
+                {t: "VCA", d: "Organisasi standar etika & kepatuhan industri aset digital."},
+                {t: "VPN", d: "Layanan privasi/enkripsi internet, akses platform dibatasi wilayah."},
+                {t: "VR (Virtual Reality)", d: "Lingkungan 3D digital, integrasi Metaverse/NFT."},
+                {t: "Virus", d: "Malware pencuri data/private key."},
+                {t: "Volatility", d: "Ukuran fluktuasi harga naik-turun drastis."},
+                {t: "Volume", d: "Total aset diperdagangkan dalam periode tertentu."}
+            ],
+            "W": [
+                {t: "Wallet", d: "Alat simpan/kelola aset kripto (kunci publik/privat)."},
+                {t: "Wash Trading", d: "Manipulasi volume palsu dengan jual-beli aset sendiri berulang."},
+                {t: "Watchlist", d: "Daftar pantauan aset untuk cari peluang."},
+                {t: "Weak Hands", d: "Investor panikan yang jual saat harga turun."},
+                {t: "Web3", d: "Internet terdesentralisasi berbasis blockchain, user kontrol data."},
+                {t: "Wei", d: "Unit terkecil Ether. 1 ETH = 10^18 Wei."},
+                {t: "Whale", d: "Pemilik aset kripto jumlah sangat besar, bisa gerakkan pasar."},
+                {t: "White Hat Hacker", d: "Peretas etis pencari celah untuk diperbaiki."},
+                {t: "White Label", d: "Produk jadi yang dibranding ulang oleh perusahaan lain."},
+                {t: "Whitepaper", d: "Dokumen resmi teknis & visi proyek kripto untuk investor."},
+                {t: "Wrapped Token", d: "Aset dipatok aset lain agar bisa jalan di blockchain beda (WBTC)."}
+            ],
+            "X": [
+                {t: "X-Chain", d: "Rantai Avalanche khusus trading/minting aset."},
+                {t: "XBT", d: "Kode ISO alternatif untuk Bitcoin (sama dengan BTC)."},
+                {t: "XRP", d: "Aset Ripple untuk transfer uang lintas negara instan & murah."}
+            ],
+            "Y": [
+                {t: "YTD (Year to Date)", d: "Performa aset dari awal tahun hingga sekarang."},
+                {t: "Yield Aggregator", d: "Platform DeFi pengoptimal profit yield farming otomatis."},
+                {t: "Yield Curve", d: "Grafik hubungan suku bunga & tenor, prediksi ekonomi."},
+                {t: "Yield Farming", d: "Mengunci aset di DeFi untuk dapat bunga/token reward."}
+            ],
+            "Z": [
+                {t: "Z-Address", d: "Alamat privat Zcash (saldo/transaksi tersembunyi)."},
+                {t: "ZKP (Zero-Knowledge Proof)", d: "Bukti kebenaran tanpa ungkap data rahasia (privasi)."},
+                {t: "zk-Rollup", d: "Solusi L2 transaksi off-chain dengan bukti validitas ZKP (cepat & aman)."},
+                {t: "Zero Confirmation", d: "Transaksi baru kirim, belum masuk blok (risiko batal)."},
+                {t: "Zilliqa", d: "Blockchain publik skalabilitas tinggi pakai teknologi sharding."}
+            ]
+        };
+
+        const navContainer = document.getElementById('alphaNav');
+        const contentContainer = document.getElementById('glossaryContent');
+        const availableLetters = Object.keys(dictionaryData);
+
+        // 1. Generate Alphabet Buttons
+        availableLetters.forEach(letter => {
+            const btn = document.createElement('button');
+            btn.innerText = letter;
+            btn.className = 'alpha-btn';
+            btn.onclick = () => showCategory(letter);
+            navContainer.appendChild(btn);
+        });
+
+        // 2. Generate Content Sections
+        availableLetters.forEach(letter => {
+            const groupDiv = document.createElement('div');
+            groupDiv.className = 'term-group';
+            groupDiv.id = `group-${letter}`;
+            
+            dictionaryData[letter].forEach(item => {
+                const termDiv = document.createElement('div');
+                termDiv.className = 'term-item';
+                termDiv.innerHTML = `<div class="term-title">${item.t}</div><div class="term-desc">${item.d}</div>`;
+                groupDiv.appendChild(termDiv);
+            });
+
+            contentContainer.appendChild(groupDiv);
+        });
+
+        // Function to switch categories with animation
+        function showCategory(letter) {
+            // Remove active class from buttons
+            document.querySelectorAll('.alpha-btn').forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            event.target.classList.add('active');
+
+            // Hide all groups
+            document.querySelectorAll('.term-group').forEach(g => g.classList.remove('active'));
+            
+            // Show selected group
+            const selectedGroup = document.getElementById(`group-${letter}`);
+            if(selectedGroup) {
+                selectedGroup.classList.add('active');
+            }
+        }
+
+        // Default show first letter available
+        if(availableLetters.length > 0) {
+            // Trigger click on the first button programmatically to set active state correctly
+            setTimeout(() => {
+                const firstBtn = navContainer.querySelector('.alpha-btn');
+                if(firstBtn) firstBtn.click();
+            }, 100);
+        }
+
+    </script>
+</body>
+</html>
